@@ -19,6 +19,8 @@ public class CashMachine {
     public static void main(String[] args) {
         String valueStr;
         String amountStr;
+        long amount;
+        long[] values = new long[0];
 
         try (Scanner scan = new Scanner(System.in)) {
 
@@ -28,12 +30,19 @@ public class CashMachine {
             System.out.print("Input values: ");
             valueStr = scan.nextLine();
         }
-
-        long amount = Long.parseLong(amountStr);
-        System.out.println();
-
-        long[] values = Arrays.stream(valueStr.split(" ")).mapToLong(Long::parseLong).toArray();
-
+        try {
+            amount = Long.parseLong(amountStr);
+        } catch (NumberFormatException e){
+            System.out.println("Exception: the entered amount is not a number");
+            return;
+        }
+        
+        try {
+            values = Arrays.stream(valueStr.split(" ")).mapToLong(Long::parseLong).toArray();
+        } catch (NumberFormatException e){
+            System.out.println("Exception: some entered values is not a number");
+        }
+        
         var variantsOfExchange = amountExchange(values, amount);
         System.out.println("Number of combinations: " + variantsOfExchange.size());
         System.out.println("Combinations: ");
@@ -57,12 +66,12 @@ public class CashMachine {
 
             for (long value : values) {
                 if (value <= 0) {
-                    throw new IOException("some values less than 0");
+                    throw new IOException("some input values less than 0");
                 }
             }
 
             if (amount <= 0) {
-                throw new IOException("some values less than 0");
+                throw new IOException("input amount less than 0");
             }
         } catch (Exception e) {
             System.out.println("Exception : " + e);
