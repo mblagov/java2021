@@ -32,14 +32,14 @@ public class CashMachine {
         }
         try {
             amount = Long.parseLong(amountStr);
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             System.out.println("Exception: the entered amount is not a number");
             return;
         }
         
         try {
             values = Arrays.stream(valueStr.split(" ")).mapToLong(Long::parseLong).toArray();
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             System.out.println("Exception: some entered values is not a number");
         }
         
