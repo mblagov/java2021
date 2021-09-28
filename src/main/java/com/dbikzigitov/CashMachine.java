@@ -1,10 +1,13 @@
 package com.dbikzigitov;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Scanner;
+
 
 /**
  * CashMachine class showing the splitting of a number into the sum of values.
@@ -14,27 +17,32 @@ public class CashMachine {
      * CashMachine entry point.
      */
     public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
+        String valueStr;
+        String amountStr;
 
-        System.out.print("Input values: ");
-        String valueStr = scan.nextLine();
+        try (Scanner scan = new Scanner(System.in)) {
 
-        System.out.print("Input amount: ");
-        int amount = scan.nextInt();
+            System.out.print("Input amount: ");
+            amountStr = scan.nextLine();
 
-        int[] values = Arrays.stream(valueStr.split(" ")).mapToInt(Integer::parseInt).toArray();
+            System.out.print("Input values: ");
+            valueStr = scan.nextLine();
+        }
 
-        var vars = cashier(values, amount);
-        System.out.println("Number of combinations: " + vars.size());
+        long amount = Long.parseLong(amountStr);
+        System.out.println();
+
+        long[] values = Arrays.stream(valueStr.split(" ")).mapToLong(Long::parseLong).toArray();
+
+        var variantsOfExchange = amountExchange(values, amount);
+        System.out.println("Number of combinations: " + variantsOfExchange.size());
         System.out.println("Combinations: ");
-        for (ArrayList<Integer> var : vars) {
-            for (Integer integer : var) {
+        for (ArrayList<Long> var : variantsOfExchange) {
+            for (Long integer : var) {
                 System.out.print(integer + " ");
             }
             System.out.println();
         }
-
-        scan.close();
     }
 
     /**
@@ -44,34 +52,48 @@ public class CashMachine {
      * @param amount number to split
      * @return List of lists splitting variants
      */
-    public static ArrayList<ArrayList<Integer>> cashier(int[] values, int amount) {
-        ArrayList<ArrayList<Integer>> vars = new ArrayList<>();
-        ArrayList<ArrayList<Integer>> goodVars = new ArrayList<>();
+    public static ArrayList<ArrayList<Long>> amountExchange(long[] values, long amount) {
+        try {
 
-        for (int value : values) {
-            ArrayList<Integer> tempList = new ArrayList<>();
+            for (long value : values) {
+                if (value <= 0) {
+                    throw new IOException("some values less than 0");
+                }
+            }
+
+            if (amount <= 0) {
+                throw new IOException("some values less than 0");
+            }
+        } catch (Exception e) {
+            System.out.println("Exception : " + e);
+        }
+        ArrayList<ArrayList<Long>> vars = new ArrayList<>();
+        ArrayList<ArrayList<Long>> goodVars = new ArrayList<>();
+
+        for (long value : values) {
+            ArrayList<Long> tempList = new ArrayList<>();
             tempList.add(value);
             vars.add(tempList);
         }
 
-        for (ArrayList<Integer> integers : vars) {
-            if (integers.get(0) == amount) {
+        for (ArrayList<Long> integers : vars) {
+            if (Objects.equals(integers.get(0), amount)) {
                 goodVars.add(integers);
             }
         }
 
         while (vars.size() > 0) {
 
-            ArrayList<ArrayList<Integer>> tempVars = new ArrayList<>();
+            ArrayList<ArrayList<Long>> tempVars = new ArrayList<>();
 
-            for (ArrayList<Integer> var : vars) {
-                tempVars.addAll(add_cash(values, var));
+            for (ArrayList<Long> var : vars) {
+                tempVars.addAll(addCash(values, var));
             }
 
 
             vars.clear();
 
-            for (ArrayList<Integer> var : tempVars) {
+            for (ArrayList<Long> var : tempVars) {
                 Collections.sort(var);
             }
 
@@ -79,9 +101,9 @@ public class CashMachine {
             tempVars.clear();
             tempVars.addAll(set);
 
-            for (ArrayList<Integer> tempVar : tempVars) {
-                int sum = 0;
-                for (Integer integer : tempVar) {
+            for (ArrayList<Long> tempVar : tempVars) {
+                long sum = 0;
+                for (Long integer : tempVar) {
                     sum += integer;
                 }
                 if (sum < amount) {
@@ -93,7 +115,7 @@ public class CashMachine {
             }
         }
 
-        for (ArrayList<Integer> goodVar : goodVars) {
+        for (ArrayList<Long> goodVar : goodVars) {
             Collections.sort(goodVar);
         }
 
@@ -111,10 +133,10 @@ public class CashMachine {
      * @param list - list of variants
      * @return list of updated variants
      */
-    public static ArrayList<ArrayList<Integer>> add_cash(int[] values, ArrayList<Integer> list) {
-        ArrayList<ArrayList<Integer>> listAddCash = new ArrayList<>();
-        for (int value : values) {
-            ArrayList<Integer> temp = new ArrayList<>(list);
+    public static ArrayList<ArrayList<Long>> addCash(long[] values, ArrayList<Long> list) {
+        ArrayList<ArrayList<Long>> listAddCash = new ArrayList<>();
+        for (long value : values) {
+            ArrayList<Long> temp = new ArrayList<>(list);
             temp.add(value);
             listAddCash.add(temp);
         }
