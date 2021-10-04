@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.mironova.task1.AtmMachineTest" tests="8" skipped="0" failures="0" errors="0" timestamp="2021-10-04T21:14:10" hostname="DESKTOP-8D9U23N" time="0.577">
+  <properties/>
+  <testcase name="testExchange1()" classname="com.mironova.task1.AtmMachineTest" time="0.302"/>
+  <testcase name="testExchange2()" classname="com.mironova.task1.AtmMachineTest" time="0.007"/>
+  <testcase name="testChangeValues()" classname="com.mironova.task1.AtmMachineTest" time="0.039"/>
+  <testcase name="getValues1()" classname="com.mironova.task1.AtmMachineTest" time="0.108"/>
+  <testcase name="getValues2()" classname="com.mironova.task1.AtmMachineTest" time="0.024"/>
+  <testcase name="getValues3()" classname="com.mironova.task1.AtmMachineTest" time="0.025"/>
+  <testcase name="getValues4()" classname="com.mironova.task1.AtmMachineTest" time="0.014"/>
+  <testcase name="getValues5()" classname="com.mironova.task1.AtmMachineTest" time="0.012"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
