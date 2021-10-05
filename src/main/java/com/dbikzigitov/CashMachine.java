@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -42,20 +44,22 @@ public class CashMachine {
         } catch (NumberFormatException e) {
             System.out.println("Exception: some entered values is not a number");
         }
-        
-        var variantsOfExchange = amountExchange(values, amount);
-        long numberOfComb = printVars(variantsOfExchange);
-        System.out.printf("Number of combinations: %d", numberOfComb);
+
+        if (checkValues(values, amount) == 0) {
+            var variantsOfExchange = amountExchange(values, amount);
+            long numberOfComb = printVars(variantsOfExchange);
+            System.out.printf("Number of combinations: %d", numberOfComb);
+        }
     }
 
     /**
-     * Cashier class displays variants for splitting a number into the sum of values.
+     * check Values method to check input numbers.
      *
-     * @param values array of input values
-     * @param amount number to split
-     * @return List of lists splitting variants
+     * @param values - input array of values
+     * @param amount - input amount
+     * @return 0 / 1 for ok / no
      */
-    public static ArrayList<ArrayList<Long>> amountExchange(long[] values, long amount) {
+    public static int checkValues(long[] values, long amount) {
         try {
 
             for (long value : values) {
@@ -67,35 +71,78 @@ public class CashMachine {
             if (amount <= 0) {
                 throw new IOException("input amount less than 0");
             }
+            return 0;
         } catch (Exception e) {
             System.out.println("Exception : " + e);
+            return 1;
         }
+    }
+
+    /**
+     * valuesRemoveSameVariants method to remove same values in long[] values.
+     *
+     * @param values - long[] values
+     * @return valuesUpd without same values
+     */
+    public static long[] valuesRemoveSameVariants(long[] values) {
+        List<Long> valuesList = new ArrayList<>();
+        for (long value : values) {
+            valuesList.add(value);
+        }
+
+        List<Long> valuesRemoveSameVarsList = new ArrayList<>(new HashSet<>(valuesList));
+        long[] valuesUpd = new long[valuesRemoveSameVarsList.size()];
+        for (int i = 0; i < valuesRemoveSameVarsList.size(); i++) {
+            valuesUpd[i] = valuesRemoveSameVarsList.get(i);
+        }
+        return valuesUpd;
+    }
+
+
+
+    /**
+     * Cashier class displays variants for splitting a number into the sum of values.
+     *
+     * @param values array of input values
+     * @param amount number to split
+     * @return List of lists splitting variants
+     */
+    public static ArrayList<ArrayList<Long>> amountExchange(long[] values, long amount) {
+        // Current variants
         ArrayList<ArrayList<Long>> vars = new ArrayList<>();
+        // good variants to return
         ArrayList<ArrayList<Long>> goodVars = new ArrayList<>();
 
+        // Remove from values[] same values
+        values = valuesRemoveSameVariants(values);
+
+        // Initial filling of current variants
         for (long value : values) {
             ArrayList<Long> tempList = new ArrayList<>();
             tempList.add(value);
             vars.add(tempList);
         }
 
+        // Check case, where current variants have good variants
         for (ArrayList<Long> integers : vars) {
             if (Objects.equals(integers.get(0), amount)) {
                 goodVars.add(integers);
             }
         }
 
+        // Update vars while size > 0
         while (vars.size() > 0) {
 
             ArrayList<ArrayList<Long>> tempVars = new ArrayList<>();
 
+            // Update vars and input list of lists in temp vars
             for (ArrayList<Long> var : vars) {
                 tempVars.addAll(addCash(values, var));
             }
 
-
             vars.clear();
 
+            // Remove from tempVars the same variants and sort it
             for (ArrayList<Long> var : tempVars) {
                 Collections.sort(var);
             }
@@ -104,6 +151,7 @@ public class CashMachine {
             tempVars.clear();
             tempVars.addAll(set);
 
+            // Find good and bad variants, and delete them, another variants put in vars
             for (ArrayList<Long> tempVar : tempVars) {
                 long sum = 0;
                 for (Long integer : tempVar) {
@@ -118,6 +166,7 @@ public class CashMachine {
             }
         }
 
+        // Remove from tempVars the same variants and sort it
         for (ArrayList<Long> goodVar : goodVars) {
             Collections.sort(goodVar);
         }
