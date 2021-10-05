@@ -50,7 +50,7 @@ public class AtmMachineTest {
 
     @Test
     public void testChangeValues() {
-        long[] values = {3, 5, 1, 1, 5, 3, 3, 3};
+        long[] values = {3, 5, 1, 1, 5, 3, 3, 3, 3};
         long[] valuesRes = {1, 3, 5};
         long[] valuesTest = AtmMachine.changeValues(values);
         assertArrayEquals(valuesRes, valuesTest);
