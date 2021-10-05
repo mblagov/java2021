@@ -45,6 +45,7 @@ public class CashMachine {
         
         var variantsOfExchange = amountExchange(values, amount);
         long numberOfComb = printVars(variantsOfExchange);
+        System.out.printf("Number of combinations: %d", numberOfComb);
     }
 
     /**
@@ -146,14 +147,13 @@ public class CashMachine {
     }
 
     /**
-     * printVars method to print variants and number of combinations.
+     * printVars method to print variants and return number of combinations.
      *
      * @param variants - list of lists variants
      * @return number of variants
      */
     public static long printVars(ArrayList<ArrayList<Long>> variants) {
         System.out.println("Number of combinations: " + variants.size());
-        System.out.println("Combinations: ");
         for (ArrayList<Long> var : variants) {
             for (Long integer : var) {
                 System.out.print(integer + " ");
