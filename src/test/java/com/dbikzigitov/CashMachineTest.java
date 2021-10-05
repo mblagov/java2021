@@ -72,4 +72,18 @@ public class CashMachineTest {
 
     }
 
+    @Test
+    public void testPrintVars() {
+        ArrayList<ArrayList<Long>> comb = new ArrayList<>();
+        ArrayList<Long> var1 = new ArrayList<>();
+        ArrayList<Long> var2 = new ArrayList<>();
+        var1.add(2L);
+        var1.add(1L);
+        var2.add(2L);
+        var2.add(2L);
+        comb.add(var1);
+        comb.add(var2);
+        assertEquals(comb.size(), CashMachine.printVars(comb));
+    }
+
 }
