@@ -94,7 +94,7 @@ public class AtmMachineTest {
     @Test
     public void getValues4() {
         String input = "1 -5" + System.lineSeparator() + "10";
-        String expectedOutput = "Input values:\n" + "Input total sum:\n"
+        String expectedOutput = "Input values:\n"
                 + "Error! A negative number or zero through values\n";
         InputStream stringStream = new java.io.ByteArrayInputStream(input.getBytes());
         OutputStream outputStream = new java.io.ByteArrayOutputStream();
@@ -106,8 +106,7 @@ public class AtmMachineTest {
     @Test
     public void getValues5() {
         String input = "2.3" + System.lineSeparator() + "10";
-        String expectedOutput = "Input values:\n" + "Input total sum:\n"
-                + "Error! Not an integer\n";
+        String expectedOutput = "Input values:\n" + "Error! Not an integer\n";
         InputStream stringStream = new java.io.ByteArrayInputStream(input.getBytes());
         OutputStream outputStream = new java.io.ByteArrayOutputStream();
         PrintStream printStream = new PrintStream(outputStream);

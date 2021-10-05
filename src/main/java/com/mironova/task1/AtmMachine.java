@@ -38,6 +38,44 @@ public class AtmMachine {
         output.print("Input values:\n");
         Scanner scanner = new Scanner(input1);
         String[] strValues = scanner.nextLine().split(" ");
+        long[] values = new long[strValues.length];
+        boolean flag = true;
+        try {
+            for (int i = 0; i < strValues.length; i++) {
+                values[i] = Long.parseLong(strValues[i]);
+                if (values[i] <= 0) {
+                    flag = false;
+                    output.print("Error! A negative number or zero through values\n");
+                }
+            }
+        } catch (NumberFormatException e) {
+            flag = false;
+            output.print("Error! Not an integer\n");
+        }
+        if (flag) {
+            output.print("Input total sum:\n");
+            if (scanner.hasNextLong()) {
+                sumForExchange = scanner.nextLong();
+                flag = true;
+                if (sumForExchange <= 0) {
+                    flag = false;
+                    output.print("Error! A negative number or zero\n");
+                }
+                if (flag) {
+                    long[] newValues = changeValues(values);
+                    return exchange(newValues, sumForExchange, newValues[newValues.length - 1]);
+                }
+            } else {
+                output.print("Error! Not an integer or too big value\n");
+            }
+        }
+        scanner.close();
+        return new ArrayList<>();
+    }
+       /* long sumForExchange;
+        output.print("Input values:\n");
+        Scanner scanner = new Scanner(input1);
+        String[] strValues = scanner.nextLine().split(" ");
         output.print("Input total sum:\n");
         int flag = 0;
         if (scanner.hasNextLong()) {
@@ -68,7 +106,7 @@ public class AtmMachine {
         }
         scanner.close();
         return new ArrayList<>();
-    }
+    } */
 
     /**
      * Exchange method implements exchanging a banknote to the sum of values.
