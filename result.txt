@@ -1,0 +1,5 @@
+resources\doc.txt
+resources\folder1\doc1.txt
+resources\folder1\doc2.txt
+resources\folder1\doc3.txt
+resources\folder1\folder2\doc4.txt
