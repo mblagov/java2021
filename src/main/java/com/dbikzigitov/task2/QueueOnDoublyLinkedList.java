@@ -2,6 +2,7 @@ package com.dbikzigitov.task2;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Queue;
 
 
@@ -12,7 +13,7 @@ import java.util.Queue;
  */
 public class QueueOnDoublyLinkedList<E> implements Queue<E> {
 
-    private DoublyLinkedList<E> items;
+    private List<E> items;
 
     public QueueOnDoublyLinkedList() {
         items = new DoublyLinkedList<>();
@@ -31,7 +32,7 @@ public class QueueOnDoublyLinkedList<E> implements Queue<E> {
     }
 
     public boolean add(E item) {
-        return items.addEnd(item);
+        return items.add(item);
     }
 
     @Override

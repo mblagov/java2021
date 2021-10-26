@@ -19,7 +19,7 @@ public class DoublyLinkedListTest {
         emptyList = new DoublyLinkedList<>();
         testSize = 3;
         for (int i = 0; i < testSize; i++) {
-            testList.addEnd(i);
+            testList.add(i);
         }
     }
 
@@ -36,7 +36,7 @@ public class DoublyLinkedListTest {
 
     @Test
     public void testAddNull() {
-        assertFalse(testList.addEnd(null));
+        assertFalse(testList.add(null));
     }
 
     @Test

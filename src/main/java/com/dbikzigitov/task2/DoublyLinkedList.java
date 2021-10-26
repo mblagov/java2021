@@ -43,6 +43,7 @@ public class DoublyLinkedList<E> implements List<E> {
      *
      * @return count of elements.
      */
+    @Override
     public int size() {
         return size;
     }
@@ -53,6 +54,7 @@ public class DoublyLinkedList<E> implements List<E> {
      *
      * @return True if empty, False if not empty.
      */
+    @Override
     public boolean isEmpty() {
         return startPos == null;
     }
@@ -64,6 +66,7 @@ public class DoublyLinkedList<E> implements List<E> {
      * @param o - object.
      * @return index of object.
      */
+    @Override
     public int indexOf(Object o) {
         if (o == null) {
             return -1;
@@ -80,18 +83,19 @@ public class DoublyLinkedList<E> implements List<E> {
         return -1;
     }
 
-
+    @Override
     public boolean contains(Object o) {
         return indexOf(o) >= 0;
     }
 
     /**
-     * addEnd method add item on last positions.
+     * add method add item on last positions.
      *
      * @param item - current item.
      * @return True(Ok) / false(not Ok)
      */
-    public boolean addEnd(E item) {
+    @Override
+    public boolean add(E item) {
         if (item == null) {
             return false;
         }
@@ -126,7 +130,7 @@ public class DoublyLinkedList<E> implements List<E> {
         if (isEmpty()) {
             startPos = addNode;
         } else if (index == size) {
-            this.addEnd(item);
+            this.add(item);
         } else {
             Node<E> currNode = startPos;
             int posCounter = 0;
@@ -152,21 +156,12 @@ public class DoublyLinkedList<E> implements List<E> {
     }
 
     /**
-     * Use addEnd (not add(e)) to add item in the End.
-     *
-     * @param e - item
-     */
-    @Override
-    public boolean add(E e) {
-        throw new UnsupportedOperationException("This operation is unsupported!");
-    }
-
-    /**
      * remove method remove item from index position.
      *
      * @param index - current index.
      * @return null if index in beyond possible boundaries, item if all Ok.
      */
+    @Override
     public E remove(int index) {
         if (index < 0 || index > size - 1) {
             return null;
@@ -224,6 +219,7 @@ public class DoublyLinkedList<E> implements List<E> {
      * @param index - current index.
      * @return null if index in beyond possible boundaries, item if all Ok.
      */
+    @Override
     public E get(int index) {
         if (index < 0 || index > size - 1) {
             return null;
