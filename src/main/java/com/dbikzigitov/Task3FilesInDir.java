@@ -21,10 +21,14 @@ public class Task3FilesInDir {
      *             args[1]: string: txt file for recording results
      */
     public static void main(String[] args) throws IOException {
-        File dirStart = new File(args[0]);
-        checkDir(dirStart);
-        List<String> result = getFileTree(args[0], "");
-        writeToFile(args[1], result);
+        if (args.length == 2) {
+            File dirStart = new File(args[0]);
+            checkDir(dirStart);
+            List<String> result = getFileTree(args[0], "");
+            writeToFile(args[1], result);
+        } else {
+            throw new IOException("No starting values, check String[] args");
+        }
     }
 
     /**
